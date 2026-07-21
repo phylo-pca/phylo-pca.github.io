@@ -1,6 +1,6 @@
 #' Locate the RevBayes executable
 #'
-#' Looks for a RevBayes installation, in order: the `phyloPCA.rb` option,
+#' Looks for a RevBayes installation, in order: the `PhyloPCA.rb` option,
 #' the `RB_PATH` environment variable, then `rb`/`rb.exe` on the system
 #' `PATH`.
 #'
@@ -8,7 +8,7 @@
 #'
 #' @export
 FindRevBayes <- function() {
-  opt <- getOption("phyloPCA.rb")
+  opt <- getOption("PhyloPCA.rb")
   if (!is.null(opt) && file.exists(opt)) {
     # Return: user-configured path
     return(opt)
@@ -24,7 +24,7 @@ FindRevBayes <- function() {
     # Return: first match found on PATH
     return(unname(onPath[1]))
   }
-  stop("Could not locate RevBayes. Set options(phyloPCA.rb = '/path/to/rb') ",
+  stop("Could not locate RevBayes. Set options(PhyloPCA.rb = '/path/to/rb') ",
        "or the RB_PATH environment variable. RevBayes is available from ",
        "https://revbayes.github.io/.")
 }
@@ -75,7 +75,7 @@ FindRevBayes <- function() {
 #' @export
 RunRevBayesBM <- function(nexusFile, outputPrefix, rbPath = FindRevBayes(), maxHours = 2,
                            seed = NULL) {
-  template <- system.file("rev", "bm_infer_body.Rev", package = "phyloPCA")
+  template <- system.file("rev", "bm_infer_body.Rev", package = "PhyloPCA")
   # Return: MAP tree file paths + log
   .RunRevBayes(template, nexusFile, outputPrefix, rbPath, maxHours, seed)
 }
@@ -101,7 +101,7 @@ RunRevBayesBM <- function(nexusFile, outputPrefix, rbPath = FindRevBayes(), maxH
 #' @export
 RunRevBayesMk <- function(nexusFile, outputPrefix, rbPath = FindRevBayes(), maxHours = 2,
                            seed = NULL) {
-  template <- system.file("rev", "mk_infer_body.Rev", package = "phyloPCA")
+  template <- system.file("rev", "mk_infer_body.Rev", package = "PhyloPCA")
   # Return: MAP tree file paths + log
   .RunRevBayes(template, nexusFile, outputPrefix, rbPath, maxHours, seed)
 }

@@ -25,7 +25,7 @@
 RunRevBayesReinference <- function(nexusFile, outDir, rbPath = FindRevBayes(),
                                     nGen = 250000, printGen = 50) {
   dir.create(outDir, showWarnings = FALSE, recursive = TRUE)
-  template <- system.file("rev", "reinfer_variable.Rev", package = "phyloPCA")
+  template <- system.file("rev", "reinfer_variable.Rev", package = "PhyloPCA")
   header <- tempfile(fileext = ".Rev")
   writeLines(c(
     sprintf('data = "%s"', nexusFile),

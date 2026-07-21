@@ -1,6 +1,6 @@
 #' Locate the TNT executable
 #'
-#' Looks for a TNT installation, in order: the `phyloPCA.tnt` option, the
+#' Looks for a TNT installation, in order: the `PhyloPCA.tnt` option, the
 #' `TNT_PATH` environment variable, then a handful of common install
 #' locations.
 #'
@@ -9,7 +9,7 @@
 #' @export
 FindTNT <- function() {
   candidates <- c(
-    getOption("phyloPCA.tnt"),
+    getOption("PhyloPCA.tnt"),
     Sys.getenv("TNT_PATH", NA),
     "C:/Programs/Phylogeny/tnt/TNT-bin/tnt.exe",
     "/usr/local/bin/tnt", "/opt/tnt/tnt"
@@ -17,7 +17,7 @@ FindTNT <- function() {
   candidates <- candidates[!is.na(candidates) & nzchar(candidates)]
   found <- candidates[file.exists(candidates)]
   if (!length(found)) {
-    stop("Could not locate TNT. Set options(phyloPCA.tnt = '/path/to/tnt') ",
+    stop("Could not locate TNT. Set options(PhyloPCA.tnt = '/path/to/tnt') ",
          "or the TNT_PATH environment variable. TNT is available from ",
          "http://www.lillo.org.ar/phylogeny/tnt/ (free for the Willi Hennig ",
          "Society membership).")
@@ -70,7 +70,7 @@ FindTNT <- function() {
                       matrix(sprintf("%.6f", shifted), ntax)), 1, paste, collapse = " ")
   writeLines(c(
     "mxram 500;", "nstates cont;", sprintf("rseed %d;", rseed),
-    "xread", "'phyloPCA continuous parsimony'", paste(nChar, ntax), body, ";",
+    "xread", "'PhyloPCA continuous parsimony'", paste(nChar, ntax), body, ";",
     .TntSearchLines("continuous")
   ), path)
 }
@@ -82,7 +82,7 @@ FindTNT <- function() {
   body <- paste(sprintf("t%d", seq_len(ntax) - 1L), sequences)
   writeLines(c(
     "mxram 500;", sprintf("rseed %d;", rseed),
-    "xread", "'phyloPCA discrete parsimony'", paste(nChar, ntax), body, ";",
+    "xread", "'PhyloPCA discrete parsimony'", paste(nChar, ntax), body, ";",
     .TntSearchLines("discrete")
   ), path)
 }
@@ -96,7 +96,7 @@ FindTNT <- function() {
   body <- paste(sprintf("t%d", seq_len(ntax) - 1L), vapply(configs, fmt, character(1)))
   writeLines(c(
     "mxram 500;", "nstates cont;", sprintf("rseed %d;", rseed),
-    "xread", "'phyloPCA shape parsimony'", paste(1, ntax),
+    "xread", "'PhyloPCA shape parsimony'", paste(1, ntax),
     sprintf("&[landmark %dd]", dim), body, ";",
     .TntSearchLines("landmark")
   ), path)

@@ -1,4 +1,4 @@
-# phyloPCA
+# PhyloPCA
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/phylo-pca/phylo-pca.github.io/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/phylo-pca/phylo-pca.github.io/actions/workflows/R-CMD-check.yaml)
@@ -67,14 +67,14 @@ this package does not vendor (their repository carries no license) -- see
 - **Cached results**: the 250 generative trees (`generative_trees`) and
   every dataset behind the reply's figures (`scale`, `scale_fig1_dists`,
   `shape_combine_nj`, and others -- see `vignette("scoring-and-figures")`
-  or `help(package = "phyloPCA")` for the full list). Bundling these means
+  or `help(package = "PhyloPCA")` for the full list). Bundling these means
   the reply's results can be inspected and re-plotted without re-running
   the underlying HPC-scale simulation grids.
 
 ## Getting started
 
 ```r
-library(phyloPCA)
+library(PhyloPCA)
 data(generative_trees)
 truth <- generative_trees[[1]]
 
@@ -96,7 +96,7 @@ See the vignettes for a full walkthrough of each stage of the analysis:
 ## Citation
 
 ```r
-citation("phyloPCA")
+citation("PhyloPCA")
 ```
 
 ## Licence

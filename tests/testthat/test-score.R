@@ -28,7 +28,7 @@ test_that("OptimalityRecovery compares within tolerance", {
 })
 
 test_that("MongleStateProportions tabulates the bundled Mongle matrix", {
-  f <- system.file("extdata", "mongle_2023.nex", package = "phyloPCA")
+  f <- system.file("extdata", "mongle_2023.nex", package = "PhyloPCA")
   skip_if(!nzchar(f))
   props <- MongleStateProportions(f)
   expect_equal(sum(props), 107)

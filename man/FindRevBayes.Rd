@@ -10,7 +10,7 @@ FindRevBayes()
 Path to the RevBayes executable.
 }
 \description{
-Looks for a RevBayes installation, in order: the \code{phyloPCA.rb} option,
+Looks for a RevBayes installation, in order: the \code{PhyloPCA.rb} option,
 the \code{RB_PATH} environment variable, then \code{rb}/\code{rb.exe} on the system
 \code{PATH}.
 }

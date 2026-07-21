@@ -4,7 +4,7 @@ template:
   bootstrap: 5
 
 home:
-  title: phyloPCA
+  title: PhyloPCA
 
 articles:
 - title: Reproducing the analysis

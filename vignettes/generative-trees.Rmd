@@ -22,7 +22,7 @@ Regenerating the tree posterior takes hours (see below), so the actual
 250-tree sample used throughout the package is bundled directly:
 
 ```{r}
-library(phyloPCA)
+library(PhyloPCA)
 data(generative_trees)
 generative_trees
 ```
@@ -48,7 +48,7 @@ for a matrix with no invariant characters. A small excerpt of the matrix is
 bundled for illustration:
 
 ```{r}
-mongleFile <- system.file("extdata", "mongle_2023.nex", package = "phyloPCA")
+mongleFile <- system.file("extdata", "mongle_2023.nex", package = "PhyloPCA")
 MongleStateProportions(mongleFile)
 ```
 

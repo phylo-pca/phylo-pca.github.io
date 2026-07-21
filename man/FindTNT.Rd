@@ -10,7 +10,7 @@ FindTNT()
 Path to the TNT executable.
 }
 \description{
-Looks for a TNT installation, in order: the \code{phyloPCA.tnt} option, the
+Looks for a TNT installation, in order: the \code{PhyloPCA.tnt} option, the
 \code{TNT_PATH} environment variable, then a handful of common install
 locations.
 }

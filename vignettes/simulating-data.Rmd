@@ -12,7 +12,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 ```{r setup}
-library(phyloPCA)
+library(PhyloPCA)
 data(generative_trees)
 truth <- generative_trees[[1]]
 ```
@@ -46,7 +46,7 @@ vary across tips are rejected and re-drawn (`coding = "variable"`), matching
 the ascertainment correction applied at inference time:
 
 ```{r}
-mongleFile <- system.file("extdata", "mongle_2023.nex", package = "phyloPCA")
+mongleFile <- system.file("extdata", "mongle_2023.nex", package = "PhyloPCA")
 stateProportions <- MongleStateProportions(mongleFile)
 set.seed(1)
 discrete <- SimulateDiscreteMS(truth, nChar = 50, stateProportions = stateProportions)
@@ -84,7 +84,7 @@ sample of its output is bundled so that everything downstream of simulation
 end-to-end without it:
 
 ```{r}
-sampleFile <- system.file("extdata", "sample_shape_t00_d2_s0.4.tsv", package = "phyloPCA")
+sampleFile <- system.file("extdata", "sample_shape_t00_d2_s0.4.tsv", package = "PhyloPCA")
 configs <- ReadShapeConfigs(sampleFile, dim = 2)
 length(configs) # one landmark configuration per taxon
 dim(configs[[1]]) # landmarks x dimensions

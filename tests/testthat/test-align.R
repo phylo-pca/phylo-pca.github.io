@@ -43,7 +43,7 @@ test_that("RftraAlign down-weights a single displaced landmark", {
 })
 
 test_that("ReadShapeConfigs parses the bundled sample shape file", {
-  f <- system.file("extdata", "sample_shape_t00_d2_s0.4.tsv", package = "phyloPCA")
+  f <- system.file("extdata", "sample_shape_t00_d2_s0.4.tsv", package = "PhyloPCA")
   skip_if(!nzchar(f))
   configs <- ReadShapeConfigs(f, dim = 2)
   expect_true(length(configs) > 0)

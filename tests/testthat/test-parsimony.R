@@ -1,6 +1,6 @@
 test_that(".TntToNewick converts TNT parenthetical notation to parseable Newick", {
   tnt <- "*(0 (1 2) (3 (4 5)))"
-  newick <- phyloPCA:::.TntToNewick(tnt)
+  newick <- PhyloPCA:::.TntToNewick(tnt)
   tr <- ape::read.tree(text = newick)
   expect_equal(ape::Ntip(tr), 6)
   expect_true(ape::is.binary(ape::unroot(tr)) || !ape::is.rooted(tr))
@@ -19,12 +19,12 @@ test_that("ScoreMPTsByMaxEntropy uses every tree when n <= k", {
 })
 
 test_that("FindTNT errors informatively when no binary is configured", {
-  oldOpt <- getOption("phyloPCA.tnt")
+  oldOpt <- getOption("PhyloPCA.tnt")
   oldEnv <- Sys.getenv("TNT_PATH", NA)
-  options(phyloPCA.tnt = "/nonexistent/tnt")
+  options(PhyloPCA.tnt = "/nonexistent/tnt")
   Sys.setenv(TNT_PATH = "/nonexistent/tnt")
   on.exit({
-    options(phyloPCA.tnt = oldOpt)
+    options(PhyloPCA.tnt = oldOpt)
     if (is.na(oldEnv)) Sys.unsetenv("TNT_PATH") else Sys.setenv(TNT_PATH = oldEnv)
   })
   # Only meaningful when none of the built-in fallback paths exist either.

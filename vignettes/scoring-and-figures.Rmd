@@ -12,7 +12,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 6, fig.height
 ```
 
 ```{r setup}
-library(phyloPCA)
+library(PhyloPCA)
 ```
 
 ## Scoring one reconstruction
@@ -44,7 +44,7 @@ against the parsimony criterion itself.
 ## The cached results
 
 Every number behind the manuscript's figures is bundled as package data.
-`?phyloPCA::scale` and its neighbours document exactly what each dataset
+`?PhyloPCA::scale` and its neighbours document exactly what each dataset
 contains and which script produced it (see the "Data" index at
 <https://phylo-pca.github.io/reference/>). At a glance:
 

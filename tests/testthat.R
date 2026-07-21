@@ -1,4 +1,4 @@
 library(testthat)
-library(phyloPCA)
+library(PhyloPCA)
 
-test_check("phyloPCA")
+test_check("PhyloPCA")
