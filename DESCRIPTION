@@ -19,6 +19,7 @@ Description: Simulates continuous, discrete and geometric-morphometric
 License: GPL (>= 3)
 Encoding: UTF-8
 Language: en-GB
+LazyData: true
 Depends:
     R (>= 4.1)
 Imports:
