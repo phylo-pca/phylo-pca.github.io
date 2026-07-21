@@ -15,7 +15,7 @@ A data frame with columns \code{t} (tree index), \code{sigma},
 simulations aligned by \code{\link[=ProcrustesAlign]{ProcrustesAlign()}}.
 }
 \usage{
-data(shape_combine_nj)
+shape_combine_nj
 }
 \description{
 Neighbour-joining accuracy from 2D shape data, 3D shape data, and the two

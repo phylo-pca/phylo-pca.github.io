@@ -13,7 +13,7 @@ A data frame with columns \code{tree}, \code{rep} (replicate index), \code{nC},
 \verb{hominin-pca-scale/R/09_scale_njdense.R}.
 }
 \usage{
-data(scale_njdense)
+scale_njdense
 }
 \description{
 Neighbour-joining-only accuracy (no Bayesian inference) across a dense

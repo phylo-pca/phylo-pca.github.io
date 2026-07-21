@@ -15,7 +15,7 @@ probability of the exact tree) and \code{rhat} (PSRF).
 using \code{inst/rev/bm_infer_body.Rev}.
 }
 \usage{
-data(scale_cont_rerun)
+scale_cont_rerun
 }
 \description{
 A 2-chain, longer re-run of the continuous Bayesian inference cells in

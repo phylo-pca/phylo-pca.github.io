@@ -15,7 +15,7 @@ A data frame with columns \code{tree}, \code{nC}, \code{CID}, \code{RF}, \code{S
 search protocol.
 }
 \usage{
-data(scale_disc_parsimony)
+scale_disc_parsimony
 }
 \description{
 Maximum-parsimony accuracy (TNT, standard Fitch optimization on

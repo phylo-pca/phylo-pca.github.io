@@ -32,7 +32,7 @@ and \code{inst/rev/bm_infer_body.Rev} / \code{inst/rev/mk_infer_body.Rev}
 (Bayesian inference).
 }
 \usage{
-data(scale)
+scale
 }
 \description{
 The core simulation grid behind Figures 1 and 2 of Smith (2026): 250

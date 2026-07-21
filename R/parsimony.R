@@ -87,17 +87,28 @@ FindTNT <- function() {
   ), path)
 }
 
-.TntWriteLandmark <- function(configs, dim, path, rseed) {
-  ntax <- length(configs)
+# `characters`: a list of one-or-more landmark characters, each a named list
+# (taxon -> landmarks x dim matrix) in a common taxon order; `dims`: matching
+# vector of dimensionalities. TNT's own xread format allows any number of
+# `&[landmark Nd]` blocks of differing dimensionality within one matrix (see
+# the bundled `landmark_example.tnt`), each one contributing a single
+# character to the total -- this is the mechanism [RunTNTParsimony()] uses
+# for `combine = TRUE` (multiple shape characters scored jointly).
+.TntWriteLandmark <- function(characters, dims, path, rseed) {
+  taxa <- names(characters[[1]])
+  ntax <- length(taxa)
   fmt <- function(config) {
     paste(apply(config, 1, function(row) paste(sprintf("%.5f", row), collapse = ",")),
           collapse = " ")
   }
-  body <- paste(sprintf("t%d", seq_len(ntax) - 1L), vapply(configs, fmt, character(1)))
+  blocks <- unlist(Map(function(configs, dim) {
+    c(sprintf("&[landmark %dd]", dim),
+      paste(sprintf("t%d", seq_len(ntax) - 1L), vapply(configs[taxa], fmt, character(1))))
+  }, characters, dims), use.names = FALSE)
   writeLines(c(
     "mxram 500;", "nstates cont;", sprintf("rseed %d;", rseed),
-    "xread", "'PhyloPCA shape parsimony'", paste(1, ntax),
-    sprintf("&[landmark %dd]", dim), body, ";",
+    "xread", "'PhyloPCA shape parsimony'", paste(length(characters), ntax),
+    blocks, ";",
     .TntSearchLines("landmark")
   ), path)
 }
@@ -114,10 +125,12 @@ FindTNT <- function() {
 #'   matrix. For `type = "discrete"`: a taxa x characters matrix of
 #'   single-character state labels. For `type = "landmark"`: a named list of
 #'   taxa's landmarks x `dim` numeric matrices (e.g. from [ProcrustesAlign()]
-#'   or [RftraAlign()]).
+#'   or [RftraAlign()]) -- or, to search two or more shape characters
+#'   *jointly* (e.g. a combined 2D+3D analysis), a list of such lists, one
+#'   per character, with `dim` given as a matching vector.
 #' @param type Data type to search under; see `data`.
 #' @param dim Number of spatial dimensions (required, and only used, when
-#'   `type = "landmark"`).
+#'   `type = "landmark"`); a vector when `data` holds multiple characters.
 #' @param tntPath Path to the TNT executable; see [FindTNT()].
 #' @param workDir Working directory for the (purely alphabetic, per TNT's
 #'   filename-parsing quirk) job script and tree file; created if absent.
@@ -140,7 +153,10 @@ RunTNTParsimony <- function(data, type = c("continuous", "discrete", "landmark")
   runFile <- "job.run"
   treeFile <- "out.tre"
 
-  taxa <- if (type == "landmark") names(data) else rownames(data)
+  # multi-character landmark data: data[[1]] is itself a list (of taxon ->
+  # matrix), rather than a matrix directly
+  multiChar <- type == "landmark" && is.list(data[[1]])
+  taxa <- if (type == "landmark") names(if (multiChar) data[[1]] else data) else rownames(data)
   attempt <- function(rseed) {
     path <- file.path(workDir, runFile)
     switch(type,
@@ -148,7 +164,13 @@ RunTNTParsimony <- function(data, type = c("continuous", "discrete", "landmark")
       discrete = .TntWriteDiscrete(data, path, rseed),
       landmark = {
         stopifnot("`dim` is required when type = 'landmark'" = !is.null(dim))
-        .TntWriteLandmark(data, dim, path, rseed)
+        if (multiChar) {
+          stopifnot("`dim` must match the number of landmark characters in `data`" =
+                      length(dim) == length(data))
+          .TntWriteLandmark(data, dim, path, rseed)
+        } else {
+          .TntWriteLandmark(list(data), dim, path, rseed)
+        }
       }
     )
     outPath <- file.path(workDir, treeFile)

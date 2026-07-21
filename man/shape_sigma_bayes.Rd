@@ -15,7 +15,7 @@ re-scoring cross-check), \code{Bayes_pm} (posterior-mean CID), \code{P_true}
 \code{inst/rev/bm_infer_body.Rev} on Hamilton.
 }
 \usage{
-data(shape_sigma_bayes)
+shape_sigma_bayes
 }
 \description{
 Bayesian inference accuracy (Brownian motion model on Procrustes-aligned

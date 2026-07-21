@@ -19,12 +19,14 @@ RunTNTParsimony(
 matrix. For \code{type = "discrete"}: a taxa x characters matrix of
 single-character state labels. For \code{type = "landmark"}: a named list of
 taxa's landmarks x \code{dim} numeric matrices (e.g. from \code{\link[=ProcrustesAlign]{ProcrustesAlign()}}
-or \code{\link[=RftraAlign]{RftraAlign()}}).}
+or \code{\link[=RftraAlign]{RftraAlign()}}) -- or, to search two or more shape characters
+\emph{jointly} (e.g. a combined 2D+3D analysis), a list of such lists, one
+per character, with \code{dim} given as a matching vector.}
 
 \item{type}{Data type to search under; see \code{data}.}
 
 \item{dim}{Number of spatial dimensions (required, and only used, when
-\code{type = "landmark"}).}
+\code{type = "landmark"}); a vector when \code{data} holds multiple characters.}
 
 \item{tntPath}{Path to the TNT executable; see \code{\link[=FindTNT]{FindTNT()}}.}
 

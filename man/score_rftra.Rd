@@ -12,7 +12,7 @@ As \code{score_native}, with \code{align} fixed to \code{"rftra"}.
 \verb{R/26_shape_par_score.R}, run on Hamilton.
 }
 \usage{
-data(score_rftra)
+score_rftra
 }
 \description{
 As \code{score_native}, but using resistant-fit superimposition (\code{\link[=RftraAlign]{RftraAlign()}})

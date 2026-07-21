@@ -12,7 +12,7 @@ A data frame with columns \code{t} (tree index), \code{dim}, \code{sigma},
 \verb{hominin-pca-scale/R/28_shape_nj_align.R}.
 }
 \usage{
-data(shape_sigma_nj_align)
+shape_sigma_nj_align
 }
 \description{
 Neighbour-joining accuracy on shape data under three alignments -

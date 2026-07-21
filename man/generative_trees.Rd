@@ -13,7 +13,7 @@ A \code{multiPhylo} of 250 trees, named \code{tree_001}..\code{tree_250}.
 \code{inst/rev/reinfer_variable.Rev}).
 }
 \usage{
-data(generative_trees)
+generative_trees
 }
 \description{
 Every simulation and reconstruction in Smith (2026) is scored against one

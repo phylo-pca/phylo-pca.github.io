@@ -17,7 +17,7 @@ additive/bayes arms), \verb{R/34_par_hamilton_gen.R} + \verb{R/35_par_hamilton_s
 see \code{\link[=RunTNTParsimony]{RunTNTParsimony()}}).
 }
 \usage{
-data(scale_fig1_dists)
+scale_fig1_dists
 }
 \description{
 The five method arms compared in Figure 1 of Smith (2026), all on the

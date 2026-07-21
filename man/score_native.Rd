@@ -15,7 +15,7 @@ subsample size used).
 \verb{R/26_shape_par_score.R}, run on Hamilton.
 }
 \usage{
-data(score_native)
+score_native
 }
 \description{
 Maximum-parsimony accuracy on shape (landmark) data (TNT's landmark data

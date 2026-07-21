@@ -15,7 +15,7 @@ a convergence diagnostic).
 \code{inst/rev/bm_infer_body.Rev} on Hamilton (\code{rev/both_array.sh}).
 }
 \usage{
-data(shape_both_bayes)
+shape_both_bayes
 }
 \description{
 Bayesian inference accuracy (Brownian motion on the concatenated,

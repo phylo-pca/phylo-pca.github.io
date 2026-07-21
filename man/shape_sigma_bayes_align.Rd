@@ -18,7 +18,7 @@ inference, so the Brownian tree-length prior is not railroaded by the
 native LDDMM coordinate scale (topology-neutral).
 }
 \usage{
-data(shape_sigma_bayes_align)
+shape_sigma_bayes_align
 }
 \description{
 As \code{shape_sigma_nj_align}, but for Bayesian inference (Brownian motion;
