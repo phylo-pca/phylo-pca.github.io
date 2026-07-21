@@ -1,0 +1,62 @@
+# Body: Bayesian Mk topology inference from MULTISTATE discrete data, now 2-run with LIVE
+# convergence stopping rules (matching the continuous bm_infer2 protocol). coding="variable"
+# + per-state-size fnJC(i) partition matches the simulator (lib_discrete_ms.R) and the tempo
+# re-inference; no ACRV (sim has none). Convergence: tree-ESS (treess, post-hoc in R) +
+# Gelman-Rubin PSRF (R-hat) on the .p.log, enforced by srGelmanRubin + srMinESS. Writes
+# _run_1/_run_2 .trees + .p.log and per-run MAP (_map1/_map2).
+# Expects (header): inNex, outPre; optional maxHours (default 2).
+data  = readDiscreteCharacterData(inNex)
+taxa  = data.taxa()
+nTaxa = taxa.size()
+nEdge = 2 * nTaxa - 3
+moves = VectorMoves(); monitors = VectorMonitors()
+
+topology ~ dnUniformTopology(taxa)
+moves.append( mvNNI(topology, weight = nEdge / 2.0) )
+moves.append( mvSPR(topology, weight = nEdge / 8.0) )
+tree_length ~ dnGamma(shape = 2, rate = 2)
+moves.append( mvScale(tree_length, weight = 1.0) )
+rel_br_lengths ~ dnDirichlet( rep(1.0, nEdge) )
+moves.append( mvBetaSimplex(rel_br_lengths, weight = nEdge / 3.0) )
+moves.append( mvDirichletSimplex(rel_br_lengths, weight = nEdge / 20.0) )
+br_lengths := rel_br_lengths * tree_length
+phylogeny := treeAssembly(topology, br_lengths)
+
+# per-state-size partition (RevBayes partitions by max observed state), fnJC(i) each
+n_max_states = data.maxStates()
+idx = 1
+data_bystate[1] <- data
+for (i in 2:n_max_states) {
+    data_bystate[i] <- data
+    data_bystate[i].setNumStatesPartition(i)
+    nc = data_bystate[i].nchar()
+    if (nc > 0) {
+        q_morph[idx] <- fnJC(i)
+        m_morph[idx] ~ dnPhyloCTMC(tree = phylogeny, Q = q_morph[idx], nSites = nc,
+                                   type = "Standard", coding = "variable")
+        m_morph[idx].clamp(data_bystate[i])
+        idx = idx + 1
+    }
+}
+
+mymodel = model(phylogeny)
+if (!exists("maxHours")) maxHours = 2
+checkFreq = 200
+paramFile = outPre + ".p.log"
+monitors.append( mnScreen(printgen = 5000) )
+monitors.append( mnModel(filename = paramFile, printgen = 10, stochasticOnly = TRUE, exclude = ["rel_br_lengths"]) )
+monitors.append( mnFile(filename = outPre + ".trees", printgen = 10, phylogeny) )
+
+mymc = mcmc(mymodel, monitors, moves, nruns = 2, combine = "none")
+mymc.burnin(generations = 2000, tuningInterval = 200)
+
+stopping_rules[1] = srMaxTime(maxHours, "hours")
+stopping_rules[2] = srMinESS(333, paramFile, checkFreq, "ESS")
+stopping_rules[3] = srGelmanRubin(1.01, paramFile, checkFreq)
+mymc.run(rules = stopping_rules, checkpointFile = outPre + ".ckp", checkpointInterval = checkFreq)
+
+t1 = readTreeTrace(outPre + "_run_1.trees", treetype = "non-clock", burnin = 0.25)
+t2 = readTreeTrace(outPre + "_run_2.trees", treetype = "non-clock", burnin = 0.25)
+mapTree(t1, file = outPre + "_map1.tre")
+mapTree(t2, file = outPre + "_map2.tre")
+q()

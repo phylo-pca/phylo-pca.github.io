@@ -1,0 +1,48 @@
+Package: phyloPCA
+Title: Phylogenetic Signal in Continuous, Discrete and Geometric-Morphometric
+    Data
+Version: 0.0.0.9000
+Authors@R:
+    person("Martin R.", "Smith",
+           email = "martin.smith@durham.ac.uk",
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-5660-1727"))
+Description: Simulates continuous, discrete and geometric-morphometric
+    ('shape') character data on a fixed generative tree, and reconstructs
+    phylogeny from each using neighbour-joining, maximum parsimony and
+    Bayesian inference, so that reconstruction accuracy can be compared
+    across data types and methods. Provides the simulation, alignment,
+    tree-inference and scoring functions, together with the cached results,
+    underlying Smith (2026), a reply to Raskin et al. (2026)
+    <doi:10.1002/ajpa.70306> on whether principal components analysis can
+    recover phylogenetic signal from continuous morphological data.
+License: GPL (>= 3)
+Encoding: UTF-8
+Language: en-GB
+Depends:
+    R (>= 4.1)
+Imports:
+    ape,
+    phangorn,
+    phytools,
+    stats,
+    TreeDist (>= 2.14.0),
+    TreeTools (>= 2.3.0),
+    utils
+Suggests:
+    knitr,
+    MaxMin,
+    rmarkdown,
+    TBRDist,
+    testthat (>= 3.0.0),
+    treess
+Remotes:
+    ms609/MaxMin,
+    ms609/treess
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+URL: https://github.com/phylo-pca/phylo-pca.github.io, https://phylo-pca.github.io
+BugReports: https://github.com/phylo-pca/phylo-pca.github.io/issues
+Config/roxygen2/version: 8.0.0

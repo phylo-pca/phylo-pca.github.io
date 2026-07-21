@@ -1,0 +1,72 @@
+# Re-infer a discrete morphological matrix under coding="variable" - the
+# correct ascertainment-bias correction for a matrix with no invariant
+# characters - so that a posterior sample of generative trees for
+# simulation studies carries correctly-scaled branch lengths (branchRates=1
+# on these trees needs no ad hoc tempo fudge).
+#
+# Mirrors Raskin et al. (2026)'s own inference model exactly except:
+#   (1) coding="variable" on every dnPhyloCTMC (their default was "all"),
+#   (2) 2 independent runs so topological convergence can be judged by
+#       tree-ESS (see TreeESS()), rather than a fixed generation count.
+#
+# Expects (header): data (path to a Nexus discrete character matrix),
+# outDir (directory for logs/trees); optional nGen (default 250000),
+# printGen (default 50).
+if (!exists("nGen")) nGen = 250000
+if (!exists("printGen")) printGen = 50
+
+morpho <- readDiscreteCharacterData(data)
+num_taxa <- morpho.size()
+num_branches <- 2 * num_taxa - 2
+taxa <- morpho.names()
+
+moves = VectorMoves()
+
+## tree - hierarchical exponential branch-length prior
+br_len_lambda ~ dnExp(0.2)
+moves.append(mvScale(br_len_lambda, weight=2))
+
+phylogeny ~ dnUniformTopologyBranchLength(taxa, branchLengthDistribution=dnExponential(br_len_lambda))
+moves.append(mvNNI(phylogeny, weight=num_branches/2.0))
+moves.append(mvSPR(phylogeny, weight=num_branches/10.0))
+moves.append(mvBranchLengthScale(phylogeny, weight=num_branches))
+tree_length := phylogeny.treeLength()
+
+## 4-category gamma among-character rate variation
+alpha_morpho ~ dnUniform( 0, 1E6 )
+rates_morpho := fnDiscretizeGamma( alpha_morpho, alpha_morpho, 4 )
+moves.append(mvScale(alpha_morpho, lambda=1, weight=2.0))
+
+## per-state-size partition, fnJC(i) per block - the only change vs. the
+## comparator model is coding="variable"
+n_max_states <- morpho.maxStates()
+idx = 1
+morpho_bystate[1] <- morpho
+for (i in 2:n_max_states) {
+    morpho_bystate[i] <- morpho
+    morpho_bystate[i].setNumStatesPartition(i)
+    nc = morpho_bystate[i].nchar()
+    if (nc > 0) {
+        q[idx] <- fnJC(i)
+        m_morph[idx] ~ dnPhyloCTMC( tree=phylogeny,
+                                    Q=q[idx],
+                                    nSites=nc,
+                                    siteRates=rates_morpho,
+                                    type="Standard",
+                                    coding="variable")
+        m_morph[idx].clamp(morpho_bystate[i])
+        idx = idx + 1
+    }
+}
+
+mymodel = model(phylogeny)
+
+monitors = VectorMonitors()
+monitors.append( mnModel(filename=outDir + "/reinfer.log", printgen=printGen) )
+monitors.append( mnFile(filename=outDir + "/reinfer.trees", printgen=printGen, phylogeny) )
+monitors.append( mnScreen(printgen=5000) )
+
+## two independent runs, kept separate for cross-run tree-ESS
+mymcmc = mcmc(mymodel, monitors, moves, nruns=2, combine="none")
+mymcmc.run(generations=nGen)
+q()

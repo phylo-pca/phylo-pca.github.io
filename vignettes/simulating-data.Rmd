@@ -1,0 +1,96 @@
+---
+title: "2. Simulating character data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{2. Simulating character data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+```{r setup}
+library(phyloPCA)
+data(generative_trees)
+truth <- generative_trees[[1]]
+```
+
+Smith (2026) simulates three kinds of character data along each generative
+tree: continuous morphological characters, discrete morphological
+characters, and geometric-morphometric ("shape") landmark data. All three
+are compared on an equal footing at the end of the analysis (see
+`vignette("scoring-and-figures")`).
+
+## Continuous characters
+
+Continuous characters are simulated under Brownian motion (root state 0,
+rate `sigma^2 = 1`, following Raskin et al. 2026), independently for each
+character:
+
+```{r}
+set.seed(1)
+continuous <- SimulateContinuous(truth, nChar = 50)
+dim(continuous)
+continuous[1:4, 1:4]
+```
+
+## Discrete characters
+
+Discrete characters are simulated under the Mk model (Lewis 2001), with no
+rate variation among characters. Each character's number of possible states
+is drawn from the empirical distribution observed in Mongle et al. (2023)'s
+matrix (see `vignette("generative-trees")`), and characters that do not
+vary across tips are rejected and re-drawn (`coding = "variable"`), matching
+the ascertainment correction applied at inference time:
+
+```{r}
+mongleFile <- system.file("extdata", "mongle_2023.nex", package = "phyloPCA")
+stateProportions <- MongleStateProportions(mongleFile)
+set.seed(1)
+discrete <- SimulateDiscreteMS(truth, nChar = 50, stateProportions = stateProportions)
+dim(discrete)
+discrete[1:4, 1:8]
+```
+
+Every column is variable across tips:
+
+```{r}
+all(apply(discrete, 2, function(col) length(unique(col)) > 1))
+```
+
+## Shape (geometric-morphometric) data
+
+Shape data are simulated with the bespoke LDDMM (large deformation
+diffeomorphic metric mapping) shape simulator of Raskin et al. (2026): a
+circular (2D) or spherical (3D) template of evenly spaced landmarks evolves
+along each branch under an Euler-Maruyama discretisation of a Matern-like
+spatial kernel, rejecting any step that would cause landmarks to cross.
+
+**This package does not vendor that simulator.** Raskin et al. (2026)'s
+repository (<https://github.com/Levi-Raskin/PCAPhylogenetics>) carries no
+license, so redistributing their C++ source here would not be a
+reproducibility aid worth the ambiguity it creates. To regenerate shape data
+from scratch: clone their repository, build `ShapeSimulationCode` (a
+recompiled, byte-for-byte-faithful harness is described in the `phaseC/`
+directory of the analysis repository at
+<https://github.com/phylo-pca/phylo-pca.github.io>), and run it on the trees
+in `generative_trees`.
+
+Because most users will never need to run the external simulator, a small
+sample of its output is bundled so that everything downstream of simulation
+-- alignment, tree inference, scoring -- can be exercised and verified
+end-to-end without it:
+
+```{r}
+sampleFile <- system.file("extdata", "sample_shape_t00_d2_s0.4.tsv", package = "phyloPCA")
+configs <- ReadShapeConfigs(sampleFile, dim = 2)
+length(configs) # one landmark configuration per taxon
+dim(configs[[1]]) # landmarks x dimensions
+```
+
+This particular sample is 2D, 25-landmark data at a shape kernel
+`sigma = 0.4`, for the tree `generative_trees[[1]]` (`t00` in the 0-based
+indexing used by the simulation grid). See
+`vignette("pca-and-alignment")` for what to do with it next.

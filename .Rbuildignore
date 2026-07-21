@@ -1,0 +1,15 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$
+^LICENSE\.md$
+^\.github$
+^data-raw$
+^\.git$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.gitignore$
+^\.gitattributes$
+^cran-comments\.md$
+^\.agent-build$
+^scratch_rb_test$

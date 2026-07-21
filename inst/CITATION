@@ -1,0 +1,13 @@
+bibentry(
+  bibtype  = "Article",
+  title    = "Recovering phylogenetic structure with principal components analysis",
+  author   = person("Martin R.", "Smith"),
+  journal  = "American Journal of Biological Anthropology",
+  year     = "2026",
+  note     = "In press; a reply to Raskin et al. (2026) <doi:10.1002/ajpa.70306>",
+  textVersion = paste(
+    "Smith, M. R. (2026). Recovering phylogenetic structure with principal",
+    "components analysis. American Journal of Biological Anthropology,",
+    "in press. A reply to Raskin et al. (2026), doi:10.1002/ajpa.70306."
+  )
+)

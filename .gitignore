@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+docs/
+inst/doc
+*.Rcheck/
+*.tar.gz
+data-raw/cache/
+.agent-build/
+scratch_rb_test/

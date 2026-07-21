@@ -1,0 +1,17 @@
+url: https://phylo-pca.github.io
+
+template:
+  bootstrap: 5
+
+home:
+  title: phyloPCA
+
+articles:
+- title: Reproducing the analysis
+  navbar: ~
+  contents:
+  - generative-trees
+  - simulating-data
+  - pca-and-alignment
+  - tree-inference
+  - scoring-and-figures
