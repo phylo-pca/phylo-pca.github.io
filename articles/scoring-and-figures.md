@@ -2,7 +2,7 @@
 
 ``` r
 
-library(phyloPCA)
+library(PhyloPCA)
 #> Registered S3 method overwritten by 'phangorn':
 #>   method   from     
 #>   [.phyDat TreeTools
@@ -44,7 +44,7 @@ criterion itself.
 ## The cached results
 
 Every number behind the manuscript’s figures is bundled as package data.
-[`?phyloPCA::scale`](https://phylo-pca.github.io/reference/scale.md) and
+[`?PhyloPCA::scale`](https://phylo-pca.github.io/reference/scale.md) and
 its neighbours document exactly what each dataset contains and which
 script produced it (see the “Data” index at
 <https://phylo-pca.github.io/reference/>). At a glance:

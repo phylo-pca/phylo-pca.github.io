@@ -12,7 +12,7 @@ Regenerating the tree posterior takes hours (see below), so the actual
 
 ``` r
 
-library(phyloPCA)
+library(PhyloPCA)
 #> Registered S3 method overwritten by 'phangorn':
 #>   method   from     
 #>   [.phyDat TreeTools
@@ -46,7 +46,7 @@ is bundled for illustration:
 
 ``` r
 
-mongleFile <- system.file("extdata", "mongle_2023.nex", package = "phyloPCA")
+mongleFile <- system.file("extdata", "mongle_2023.nex", package = "PhyloPCA")
 MongleStateProportions(mongleFile)
 #> 
 #>  2  3  4  5  6 

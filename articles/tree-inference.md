@@ -2,7 +2,7 @@
 
 ``` r
 
-library(phyloPCA)
+library(PhyloPCA)
 library(ape)
 data(generative_trees)
 truth <- generative_trees[[1]]
@@ -47,7 +47,7 @@ Wagner-optimized real-valued characters (Goloboff et al. 2006);
 linear-displacement-optimized landmark configurations (Goloboff &
 Catalano’s method, following Palci & Lee 2019).
 
-This needs a local TNT installation (`options(phyloPCA.tnt = ...)` or
+This needs a local TNT installation (`options(PhyloPCA.tnt = ...)` or
 the `TNT_PATH` environment variable; see
 [`FindTNT()`](https://phylo-pca.github.io/reference/FindTNT.md)) – not
 available when this vignette was built, so this chunk is shown but not

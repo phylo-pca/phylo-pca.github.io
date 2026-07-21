@@ -17,6 +17,7 @@
 <url><loc>https://phylo-pca.github.io/reference/HammingDistance.html</loc></url>
 <url><loc>https://phylo-pca.github.io/reference/MongleStateProportions.html</loc></url>
 <url><loc>https://phylo-pca.github.io/reference/OptimalityRecovery.html</loc></url>
+<url><loc>https://phylo-pca.github.io/reference/PhyloPCA-package.html</loc></url>
 <url><loc>https://phylo-pca.github.io/reference/ProcrustesAlign.html</loc></url>
 <url><loc>https://phylo-pca.github.io/reference/ReadMAPTree.html</loc></url>
 <url><loc>https://phylo-pca.github.io/reference/ReadRevBayesTrees.html</loc></url>
@@ -37,7 +38,6 @@
 <url><loc>https://phylo-pca.github.io/reference/WriteDiscreteNexus.html</loc></url>
 <url><loc>https://phylo-pca.github.io/reference/generative_trees.html</loc></url>
 <url><loc>https://phylo-pca.github.io/reference/index.html</loc></url>
-<url><loc>https://phylo-pca.github.io/reference/phyloPCA-package.html</loc></url>
 <url><loc>https://phylo-pca.github.io/reference/scale.html</loc></url>
 <url><loc>https://phylo-pca.github.io/reference/scale_cont_rerun.html</loc></url>
 <url><loc>https://phylo-pca.github.io/reference/scale_disc_parsimony.html</loc></url>

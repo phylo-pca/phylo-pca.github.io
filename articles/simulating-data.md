@@ -2,7 +2,7 @@
 
 ``` r
 
-library(phyloPCA)
+library(PhyloPCA)
 #> Registered S3 method overwritten by 'phangorn':
 #>   method   from     
 #>   [.phyDat TreeTools
@@ -50,7 +50,7 @@ at inference time:
 
 ``` r
 
-mongleFile <- system.file("extdata", "mongle_2023.nex", package = "phyloPCA")
+mongleFile <- system.file("extdata", "mongle_2023.nex", package = "PhyloPCA")
 stateProportions <- MongleStateProportions(mongleFile)
 set.seed(1)
 discrete <- SimulateDiscreteMS(truth, nChar = 50, stateProportions = stateProportions)
@@ -98,7 +98,7 @@ verified end-to-end without it:
 
 ``` r
 
-sampleFile <- system.file("extdata", "sample_shape_t00_d2_s0.4.tsv", package = "phyloPCA")
+sampleFile <- system.file("extdata", "sample_shape_t00_d2_s0.4.tsv", package = "PhyloPCA")
 configs <- ReadShapeConfigs(sampleFile, dim = 2)
 length(configs) # one landmark configuration per taxon
 #> [1] 21

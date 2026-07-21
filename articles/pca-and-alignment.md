@@ -2,7 +2,7 @@
 
 ``` r
 
-library(phyloPCA)
+library(PhyloPCA)
 #> Registered S3 method overwritten by 'phangorn':
 #>   method   from     
 #>   [.phyDat TreeTools
@@ -43,7 +43,7 @@ compared to plain
 
 ``` r
 
-mongleFile <- system.file("extdata", "mongle_2023.nex", package = "phyloPCA")
+mongleFile <- system.file("extdata", "mongle_2023.nex", package = "PhyloPCA")
 stateProportions <- MongleStateProportions(mongleFile)
 X <- SimulateDiscreteMS(truth, nChar = 100, stateProportions = stateProportions)
 dHamming <- HammingDistance(X)
@@ -53,7 +53,7 @@ dCorrected <- CorrectedDistanceMS(X)
 ## Shape data: superimposition
 
 Landmark configurations must be superimposed (aligned) before their
-coordinates are comparable between taxa. `phyloPCA` provides two
+coordinates are comparable between taxa. `PhyloPCA` provides two
 alignments, both dependency-free, pure-R implementations:
 
 - [`ProcrustesAlign()`](https://phylo-pca.github.io/reference/ProcrustesAlign.md):
@@ -70,7 +70,7 @@ alignments, both dependency-free, pure-R implementations:
 
 ``` r
 
-sampleFile <- system.file("extdata", "sample_shape_t00_d2_s0.4.tsv", package = "phyloPCA")
+sampleFile <- system.file("extdata", "sample_shape_t00_d2_s0.4.tsv", package = "PhyloPCA")
 configs <- ReadShapeConfigs(sampleFile, dim = 2)[truth$tip.label] # order to tree tips
 aligned <- ProcrustesAlign(configs)
 alignedRftra <- RftraAlign(configs)

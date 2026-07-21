@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>3. PCA, alignment and distances • phyloPCA</title>
+<title>3. PCA, alignment and distances • PhyloPCA</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -18,7 +18,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="../index.html">phyloPCA</a>
+    <a class="navbar-brand me-2" href="../index.html">PhyloPCA</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
 
@@ -70,7 +70,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/phylo-pca/phylo-pca.github.io" class="external-link">phyloPCA</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/phylo-pca/phylo-pca.github.io" class="external-link">PhyloPCA</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Registered S3 method overwritten by 'phangorn':</span></span>
 <span><span class="co">#&gt;   method   from     </span></span>
 <span><span class="co">#&gt;   [.phyDat TreeTools</span></span>
@@ -102,7 +102,7 @@ Jukes-Cantor correction; reduces to the familiar binary correction when
 every character has two states), compared to plain
 <code><a href="../reference/HammingDistance.html">HammingDistance()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mongleFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mongle_2023.nex"</span>, package <span class="op">=</span> <span class="st">"phyloPCA"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">mongleFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mongle_2023.nex"</span>, package <span class="op">=</span> <span class="st">"PhyloPCA"</span><span class="op">)</span></span>
 <span><span class="va">stateProportions</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MongleStateProportions.html">MongleStateProportions</a></span><span class="op">(</span><span class="va">mongleFile</span><span class="op">)</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SimulateDiscreteMS.html">SimulateDiscreteMS</a></span><span class="op">(</span><span class="va">truth</span>, nChar <span class="op">=</span> <span class="fl">100</span>, stateProportions <span class="op">=</span> <span class="va">stateProportions</span><span class="op">)</span></span>
 <span><span class="va">dHamming</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/HammingDistance.html">HammingDistance</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span></span>
@@ -112,7 +112,7 @@ every character has two states), compared to plain
 <h2 id="shape-data-superimposition">Shape data: superimposition<a class="anchor" aria-label="anchor" href="#shape-data-superimposition"></a>
 </h2>
 <p>Landmark configurations must be superimposed (aligned) before their
-coordinates are comparable between taxa. <code>phyloPCA</code> provides
+coordinates are comparable between taxa. <code>PhyloPCA</code> provides
 two alignments, both dependency-free, pure-R implementations:</p>
 <ul>
 <li>
@@ -128,7 +128,7 @@ displaced landmarks (the “Pinocchio effect”: Palci &amp; Lee 2019) are
 down-weighted rather than smeared across the whole configuration.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sampleFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sample_shape_t00_d2_s0.4.tsv"</span>, package <span class="op">=</span> <span class="st">"phyloPCA"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">sampleFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sample_shape_t00_d2_s0.4.tsv"</span>, package <span class="op">=</span> <span class="st">"PhyloPCA"</span><span class="op">)</span></span>
 <span><span class="va">configs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadShapeConfigs.html">ReadShapeConfigs</a></span><span class="op">(</span><span class="va">sampleFile</span>, dim <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">[</span><span class="va">truth</span><span class="op">$</span><span class="va">tip.label</span><span class="op">]</span> <span class="co"># order to tree tips</span></span>
 <span><span class="va">aligned</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ProcrustesAlign.html">ProcrustesAlign</a></span><span class="op">(</span><span class="va">configs</span><span class="op">)</span></span>
 <span><span class="va">alignedRftra</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/RftraAlign.html">RftraAlign</a></span><span class="op">(</span><span class="va">configs</span><span class="op">)</span></span></code></pre></div>

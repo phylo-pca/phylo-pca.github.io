@@ -1,4 +1,4 @@
-# phyloPCA
+# PhyloPCA
 
 Simulation, alignment, tree-inference and scoring functions – and the
 cached results they produced – behind:
@@ -80,7 +80,8 @@ vendor (their repository carries no license) – see
   every dataset behind the reply’s figures (`scale`, `scale_fig1_dists`,
   `shape_combine_nj`, and others – see
   [`vignette("scoring-and-figures")`](https://phylo-pca.github.io/articles/scoring-and-figures.md)
-  or [`help(package = "phyloPCA")`](https://rdrr.io/pkg/phyloPCA/man)
+  or
+  [`help(package = "PhyloPCA")`](https://phylo-pca.github.io/reference)
   for the full list). Bundling these means the reply’s results can be
   inspected and re-plotted without re-running the underlying HPC-scale
   simulation grids.
@@ -89,7 +90,7 @@ vendor (their repository carries no license) – see
 
 ``` r
 
-library(phyloPCA)
+library(PhyloPCA)
 data(generative_trees)
 truth <- generative_trees[[1]]
 
@@ -117,7 +118,7 @@ See the vignettes for a full walkthrough of each stage of the analysis:
 
 ``` r
 
-citation("phyloPCA")
+citation("PhyloPCA")
 ```
 
 ## Licence

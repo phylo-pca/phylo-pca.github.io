@@ -1,6 +1,6 @@
 # Locate the RevBayes executable
 
-Looks for a RevBayes installation, in order: the `phyloPCA.rb` option,
+Looks for a RevBayes installation, in order: the `PhyloPCA.rb` option,
 the `RB_PATH` environment variable, then `rb`/`rb.exe` on the system
 `PATH`.
 
