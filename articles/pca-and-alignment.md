@@ -1,0 +1,101 @@
+# 3. PCA, alignment and distances
+
+``` r
+
+library(phyloPCA)
+#> Registered S3 method overwritten by 'phangorn':
+#>   method   from     
+#>   [.phyDat TreeTools
+data(generative_trees)
+truth <- generative_trees[[1]]
+```
+
+## Continuous data: principal components and distance
+
+For continuous characters,
+[`prcomp()`](https://rdrr.io/r/stats/prcomp.html) (base R) already does
+everything needed: Smith (2026) centres each character on its mean,
+without rescaling to unit variance, then computes Euclidean distance on
+(i) the first two principal components (Raskin et al. 2026’s pipeline);
+(ii) all principal components (equivalent to distance on the original
+scaled characters); and (iii) the *additive* (squared-Euclidean)
+distance, appropriate for neighbour-joining because the expected
+**squared** distance between taxa under Brownian motion is proportional
+to tree (patristic) distance:
+
+``` r
+
+set.seed(1)
+M <- SimulateContinuous(truth, nChar = 100)
+scores <- prcomp(M)$x
+
+dPipeline <- dist(scores[, 1:2]) # Raskin et al. (2026)'s pipeline
+dAllPC <- dist(scores) # all dimensions retained
+dAdditive <- SquaredEuclideanDistance(scores) # the additive fix
+```
+
+Discrete characters get the analogous additive fix via
+[`CorrectedDistanceMS()`](https://phylo-pca.github.io/reference/CorrectedDistanceMS.md)
+(a per-character-state-size Jukes-Cantor correction; reduces to the
+familiar binary correction when every character has two states),
+compared to plain
+[`HammingDistance()`](https://phylo-pca.github.io/reference/HammingDistance.md):
+
+``` r
+
+mongleFile <- system.file("extdata", "mongle_2023.nex", package = "phyloPCA")
+stateProportions <- MongleStateProportions(mongleFile)
+X <- SimulateDiscreteMS(truth, nChar = 100, stateProportions = stateProportions)
+dHamming <- HammingDistance(X)
+dCorrected <- CorrectedDistanceMS(X)
+```
+
+## Shape data: superimposition
+
+Landmark configurations must be superimposed (aligned) before their
+coordinates are comparable between taxa. `phyloPCA` provides two
+alignments, both dependency-free, pure-R implementations:
+
+- [`ProcrustesAlign()`](https://phylo-pca.github.io/reference/ProcrustesAlign.md):
+  ordinary least-squares generalized Procrustes analysis (GPA) – centre,
+  scale to unit centroid size, iteratively rotate onto an evolving
+  consensus. Equivalent to `geomorph::gpagen()` for complete landmark
+  data.
+- [`RftraAlign()`](https://phylo-pca.github.io/reference/RftraAlign.md):
+  resistant-fit (RFTRA) superimposition (Siegel & Benson 1982;
+  Slice 1996) – a repeated-median scale and Tukey-bisquare reweighted
+  rotation, so that a small number of grossly displaced landmarks (the
+  “Pinocchio effect”: Palci & Lee 2019) are down-weighted rather than
+  smeared across the whole configuration.
+
+``` r
+
+sampleFile <- system.file("extdata", "sample_shape_t00_d2_s0.4.tsv", package = "phyloPCA")
+configs <- ReadShapeConfigs(sampleFile, dim = 2)[truth$tip.label] # order to tree tips
+aligned <- ProcrustesAlign(configs)
+alignedRftra <- RftraAlign(configs)
+```
+
+Both alignments return a named list of landmarks x dim matrices, in the
+same order supplied. To compute a distance for neighbour-joining,
+flatten each aligned configuration to one row per taxon:
+
+``` r
+
+flat <- t(sapply(aligned, function(z) c(z)))
+dShape <- dist(flat)
+```
+
+Which alignment is better depends on the shape kernel: Smith (2026)
+finds Procrustes and RFTRA barely distinguishable in practice (the LDDMM
+deformations used are smooth and distributed, without the isolated
+“Pinocchio” landmark outliers RFTRA is designed to resist), and both
+noticeably better than no superimposition once the shape kernel is
+sufficiently integrated (see
+[`vignette("scoring-and-figures")`](https://phylo-pca.github.io/articles/scoring-and-figures.md)
+and the `shape_sigma_nj_align`/`score_native`/`score_rftra` datasets,
+which compare all three).
+
+Continuing this worked example through to a scored neighbour-joining
+tree is shown next, in
+[`vignette("tree-inference")`](https://phylo-pca.github.io/articles/tree-inference.md).

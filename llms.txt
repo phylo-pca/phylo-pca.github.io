@@ -1,0 +1,263 @@
+# phyloPCA
+
+Simulation, alignment, tree-inference and scoring functions – and the
+cached results they produced – behind:
+
+> Smith, M. R. (2026). Recovering phylogenetic structure with principal
+> components analysis. A reply to Raskin, Šešelj, Bitarello, Stroustrup,
+> Li & Huelsenbeck (2026), *American Journal of Biological
+> Anthropology*.
+
+Raskin et al. (2026) show that neighbour-joining trees built from PCA
+scores of simulated continuous morphological data almost never match the
+tree the data were generated on. This package provides everything needed
+to reproduce our reply’s finding that this is a property of *how the
+data were analysed*, not of continuous data or PCA in general: an
+unrooted 21-tip tree topology is drawn from a vanishingly large space
+(making exact recovery a poor accuracy measure), neighbour-joining
+assumes an *additive* input distance (which raw Euclidean PCA distance
+is not, but its square is), and once these are corrected, phylogenetic
+reconstruction from continuous, discrete and geometric-morphometric
+(“shape”) data is broadly comparable in accuracy – whether reconstructed
+by neighbour-joining, maximum parsimony, or Bayesian inference.
+
+## Installation
+
+``` r
+
+# install.packages("remotes")
+remotes::install_github("phylo-pca/phylo-pca.github.io")
+```
+
+Simulating and scoring data needs only R and its dependencies (all on
+CRAN, plus [MaxMin](https://github.com/ms609/MaxMin) and
+[treess](https://github.com/ms609/treess), installed automatically as
+`Remotes`). Reproducing the maximum-parsimony and Bayesian-inference
+arms from scratch additionally needs
+[TNT](http://www.lillo.org.ar/phylogeny/tnt/) and
+[RevBayes](https://revbayes.github.io/) installed locally – see
+[`vignette("tree-inference")`](https://phylo-pca.github.io/articles/tree-inference.md).
+Regenerating the geometric-morphometric shape data needs Raskin et
+al. (2026)’s own LDDMM shape simulator, which this package does not
+vendor (their repository carries no license) – see
+[`vignette("simulating-data")`](https://phylo-pca.github.io/articles/simulating-data.md).
+
+## What’s here
+
+- **Simulation**: continuous characters under Brownian motion
+  ([`SimulateContinuous()`](https://phylo-pca.github.io/reference/SimulateContinuous.md)),
+  multistate discrete characters under the Mk model
+  ([`SimulateDiscreteMS()`](https://phylo-pca.github.io/reference/SimulateDiscreteMS.md)),
+  and readers for the externally-simulated geometric-morphometric shape
+  data
+  ([`ReadShapeConfigs()`](https://phylo-pca.github.io/reference/ReadShapeConfigs.md)).
+- **Alignment**: dependency-free generalized Procrustes analysis
+  ([`ProcrustesAlign()`](https://phylo-pca.github.io/reference/ProcrustesAlign.md))
+  and resistant-fit superimposition
+  ([`RftraAlign()`](https://phylo-pca.github.io/reference/RftraAlign.md))
+  for shape data.
+- **Distances**: the additive (“squaring”) fix for neighbour-joining on
+  continuous
+  ([`SquaredEuclideanDistance()`](https://phylo-pca.github.io/reference/SquaredEuclideanDistance.md))
+  and discrete
+  ([`CorrectedDistanceMS()`](https://phylo-pca.github.io/reference/CorrectedDistanceMS.md))
+  data.
+- **Tree inference**: wrappers for maximum-parsimony search in TNT
+  ([`RunTNTParsimony()`](https://phylo-pca.github.io/reference/RunTNTParsimony.md),
+  continuous/discrete/landmark data, using the unified search protocol
+  validated throughout the reply) and Bayesian inference in RevBayes
+  ([`RunRevBayesBM()`](https://phylo-pca.github.io/reference/RunRevBayesBM.md),
+  [`RunRevBayesMk()`](https://phylo-pca.github.io/reference/RunRevBayesMk.md)).
+- **Scoring**: tree-distance metrics
+  ([`ScoreToTruth()`](https://phylo-pca.github.io/reference/ScoreToTruth.md):
+  clustering information distance, Robinson-Foulds, SPR), exact-match
+  and optimality-based recovery
+  ([`ExactlyRecovered()`](https://phylo-pca.github.io/reference/ExactlyRecovered.md),
+  [`OptimalityRecovery()`](https://phylo-pca.github.io/reference/OptimalityRecovery.md)),
+  and maximum-entropy subsampling of tied most-parsimonious trees
+  ([`ScoreMPTsByMaxEntropy()`](https://phylo-pca.github.io/reference/ScoreMPTsByMaxEntropy.md)).
+- **Cached results**: the 250 generative trees (`generative_trees`) and
+  every dataset behind the reply’s figures (`scale`, `scale_fig1_dists`,
+  `shape_combine_nj`, and others – see
+  [`vignette("scoring-and-figures")`](https://phylo-pca.github.io/articles/scoring-and-figures.md)
+  or [`help(package = "phyloPCA")`](https://rdrr.io/pkg/phyloPCA/man)
+  for the full list). Bundling these means the reply’s results can be
+  inspected and re-plotted without re-running the underlying HPC-scale
+  simulation grids.
+
+## Getting started
+
+``` r
+
+library(phyloPCA)
+data(generative_trees)
+truth <- generative_trees[[1]]
+
+M <- SimulateContinuous(truth, nChar = 100)
+scores <- prcomp(M)$x
+
+treeNJ <- ape::nj(SquaredEuclideanDistance(scores))
+ScoreToTruth(treeNJ, truth, metrics = c("CID", "RF"))
+```
+
+See the vignettes for a full walkthrough of each stage of the analysis:
+
+1.  [Generative
+    trees](https://phylo-pca.github.io/articles/generative-trees.html)
+2.  [Simulating character
+    data](https://phylo-pca.github.io/articles/simulating-data.html)
+3.  [PCA, alignment and
+    distances](https://phylo-pca.github.io/articles/pca-and-alignment.html)
+4.  [Tree
+    inference](https://phylo-pca.github.io/articles/tree-inference.html)
+5.  [Scoring reconstructions and reproducing the
+    figures](https://phylo-pca.github.io/articles/scoring-and-figures.html)
+
+## Citation
+
+``` r
+
+citation("phyloPCA")
+```
+
+## Licence
+
+GPL (\>= 3). Mongle et al. (2023)‘s character matrix is bundled
+(`inst/extdata/mongle_2023.nex`) for convenience, with attribution; it
+remains the original authors’ data.
+
+# Package index
+
+## All functions
+
+- [`CorrectedDistanceMS()`](https://phylo-pca.github.io/reference/CorrectedDistanceMS.md)
+  : Additive distance for a mixed-state-space discrete matrix
+
+- [`ExactlyRecovered()`](https://phylo-pca.github.io/reference/ExactlyRecovered.md)
+  : Exact-match tree recovery
+
+- [`FindRevBayes()`](https://phylo-pca.github.io/reference/FindRevBayes.md)
+  : Locate the RevBayes executable
+
+- [`FindTNT()`](https://phylo-pca.github.io/reference/FindTNT.md) :
+  Locate the TNT executable
+
+- [`HammingDistance()`](https://phylo-pca.github.io/reference/HammingDistance.md)
+  : Hamming (p-)distance between discrete character rows
+
+- [`MongleStateProportions()`](https://phylo-pca.github.io/reference/MongleStateProportions.md)
+  : State-space size distribution of the Mongle (2023) character matrix
+
+- [`OptimalityRecovery()`](https://phylo-pca.github.io/reference/OptimalityRecovery.md)
+  : Optimality-based tree recovery
+
+- [`ProcrustesAlign()`](https://phylo-pca.github.io/reference/ProcrustesAlign.md)
+  : Generalized Procrustes alignment of landmark configurations
+
+- [`ReadMAPTree()`](https://phylo-pca.github.io/reference/ReadMAPTree.md)
+  :
+
+  Read a RevBayes maximum *a posteriori* tree
+
+- [`ReadRevBayesTrees()`](https://phylo-pca.github.io/reference/ReadRevBayesTrees.md)
+  : Read a RevBayes tree trace
+
+- [`ReadShapeConfigs()`](https://phylo-pca.github.io/reference/ReadShapeConfigs.md)
+  : Read landmark configurations from a shape-simulator TSV
+
+- [`RftraAlign()`](https://phylo-pca.github.io/reference/RftraAlign.md)
+  : Resistant-fit (RFTRA) alignment of landmark configurations
+
+- [`RunRevBayesBM()`](https://phylo-pca.github.io/reference/RunRevBayesBM.md)
+  : Bayesian inference of a tree from continuous character data
+
+- [`RunRevBayesMk()`](https://phylo-pca.github.io/reference/RunRevBayesMk.md)
+  : Bayesian inference of a tree from discrete character data
+
+- [`RunRevBayesReinference()`](https://phylo-pca.github.io/reference/RunRevBayesReinference.md)
+  : Re-infer a posterior of generative trees
+
+- [`RunTNTParsimony()`](https://phylo-pca.github.io/reference/RunTNTParsimony.md)
+  : Maximum-parsimony tree search in TNT
+
+- [`SampleStableTrees()`](https://phylo-pca.github.io/reference/SampleStableTrees.md)
+  : Sample a stable set of generative trees from a posterior
+
+- [`ScoreMPTsByMaxEntropy()`](https://phylo-pca.github.io/reference/ScoreMPTsByMaxEntropy.md)
+  : Score a most-parsimonious tree set by maximum-entropy subsampling
+
+- [`ScoreToTruth()`](https://phylo-pca.github.io/reference/ScoreToTruth.md)
+  : Score a reconstructed tree against the true tree
+
+- [`SimulateContinuous()`](https://phylo-pca.github.io/reference/SimulateContinuous.md)
+  : Simulate continuous characters under Brownian motion
+
+- [`SimulateDiscreteMS()`](https://phylo-pca.github.io/reference/SimulateDiscreteMS.md)
+  : Simulate multistate discrete characters under the Mk model
+
+- [`SquaredEuclideanDistance()`](https://phylo-pca.github.io/reference/SquaredEuclideanDistance.md)
+  : Squared-Euclidean distance
+
+- [`TreeESS()`](https://phylo-pca.github.io/reference/TreeESS.md) :
+  Topological effective sample size across RevBayes runs
+
+- [`WriteContinuousNexus()`](https://phylo-pca.github.io/reference/WriteContinuousNexus.md)
+  : Write a continuous-character Nexus file
+
+- [`WriteDiscreteNexus()`](https://phylo-pca.github.io/reference/WriteDiscreteNexus.md)
+  : Write a discrete-character Nexus file
+
+- [`generative_trees`](https://phylo-pca.github.io/reference/generative_trees.md)
+  : The 250 generative trees used throughout Smith (2026)
+
+- [`scale`](https://phylo-pca.github.io/reference/scale.md) :
+  Publication-scale grid: continuous and discrete data, NJ and Bayesian
+  inference
+
+- [`scale_cont_rerun`](https://phylo-pca.github.io/reference/scale_cont_rerun.md)
+  : Converged continuous Bayesian re-run
+
+- [`scale_disc_parsimony`](https://phylo-pca.github.io/reference/scale_disc_parsimony.md)
+  : Discrete data maximum parsimony
+
+- [`scale_fig1_dists`](https://phylo-pca.github.io/reference/scale_fig1_dists.md)
+  : Figure 1 method-comparison distances (continuous data)
+
+- [`scale_njdense`](https://phylo-pca.github.io/reference/scale_njdense.md)
+  : Dense neighbour-joining ladder
+
+- [`score_native`](https://phylo-pca.github.io/reference/score_native.md)
+  : Shape data maximum parsimony: native/Procrustes alignment
+
+- [`score_rftra`](https://phylo-pca.github.io/reference/score_rftra.md)
+  : Shape data maximum parsimony: resistant-fit (RFTRA) alignment
+
+- [`shape_both_bayes`](https://phylo-pca.github.io/reference/shape_both_bayes.md)
+  : Combined 2D+3D shape data Bayesian inference
+
+- [`shape_combine_nj`](https://phylo-pca.github.io/reference/shape_combine_nj.md)
+  : Combining 2D and 3D shape data (neighbour-joining)
+
+- [`shape_sigma_bayes`](https://phylo-pca.github.io/reference/shape_sigma_bayes.md)
+  : Shape data Bayesian inference by dimension and sigma
+
+- [`shape_sigma_bayes_align`](https://phylo-pca.github.io/reference/shape_sigma_bayes_align.md)
+  : Shape data Bayesian inference: alignment comparison
+
+- [`shape_sigma_nj_align`](https://phylo-pca.github.io/reference/shape_sigma_nj_align.md)
+  : Shape data neighbour-joining: alignment comparison
+
+# Articles
+
+### Reproducing the analysis
+
+- [1. Generative
+  trees](https://phylo-pca.github.io/articles/generative-trees.md):
+- [2. Simulating character
+  data](https://phylo-pca.github.io/articles/simulating-data.md):
+- [3. PCA, alignment and
+  distances](https://phylo-pca.github.io/articles/pca-and-alignment.md):
+- [4. Tree inference: neighbour-joining, parsimony,
+  Bayesian](https://phylo-pca.github.io/articles/tree-inference.md):
+- [5. Scoring reconstructions and reproducing the
+  figures](https://phylo-pca.github.io/articles/scoring-and-figures.md):
