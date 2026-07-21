@@ -42,7 +42,11 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.0.9000" id="phylopca-0009000">PhyloPCA 0.0.0.9000<a class="anchor" aria-label="anchor" href="#phylopca-0009000"></a></h2>
-<ul><li>Initial public release: simulation, alignment, tree-inference and scoring functions, and cached results, underlying Smith (2026), a reply to Raskin et al. (2026).</li>
+<ul><li>
+<code>RunTNTParsimony(type = "landmark")</code> now accepts a list of landmark characters (with a matching <code>dim</code> vector) to search two or more shape characters jointly, e.g. a combined 2D+3D analysis – TNT’s own xread format allows any number of <code>&amp;[landmark Nd]</code> blocks of differing dimensionality in one matrix.</li>
+<li>
+<code>scale_fig1_dists</code>’s <code>mp</code>-arm <code>SPR</code> column is populated (was <code>NA</code>): recomputed on Hamilton, guarded by <code><a href="https://rdrr.io/pkg/ape/man/is.binary.tree.html" class="external-link">is.binary()</a></code> and a per-cell subprocess <code>timeout</code> (999/1000 cells; the remaining cell is a genuinely intractable pair under <code><a href="https://ms609.github.io/TBRDist/reference/TreeRearrangementDistances.html" class="external-link">TBRDist::USPRDist()</a></code>, left <code>NA</code>).</li>
+<li>Initial public release: simulation, alignment, tree-inference and scoring functions, and cached results, underlying Smith (2026), a reply to Raskin et al. (2026).</li>
 </ul></div>
   </main></div>
 

@@ -9,7 +9,7 @@ parameter `sigma`.
 ## Usage
 
 ``` r
-data(shape_sigma_bayes)
+shape_sigma_bayes
 ```
 
 ## Format

@@ -12,7 +12,7 @@ treatments, across dimension and `sigma`.
 ## Usage
 
 ``` r
-data(score_native)
+score_native
 ```
 
 ## Format

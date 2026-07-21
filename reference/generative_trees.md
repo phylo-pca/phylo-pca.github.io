@@ -16,7 +16,7 @@ same tree.
 ## Usage
 
 ``` r
-data(generative_trees)
+generative_trees
 ```
 
 ## Format

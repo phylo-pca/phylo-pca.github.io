@@ -30,7 +30,10 @@ RunTNTParsimony(
   landmarks x `dim` numeric matrices (e.g. from
   [`ProcrustesAlign()`](https://phylo-pca.github.io/reference/ProcrustesAlign.md)
   or
-  [`RftraAlign()`](https://phylo-pca.github.io/reference/RftraAlign.md)).
+  [`RftraAlign()`](https://phylo-pca.github.io/reference/RftraAlign.md))
+  – or, to search two or more shape characters *jointly* (e.g. a
+  combined 2D+3D analysis), a list of such lists, one per character,
+  with `dim` given as a matching vector.
 
 - type:
 
@@ -39,7 +42,7 @@ RunTNTParsimony(
 - dim:
 
   Number of spatial dimensions (required, and only used, when
-  `type = "landmark"`).
+  `type = "landmark"`); a vector when `data` holds multiple characters.
 
 - tntPath:
 

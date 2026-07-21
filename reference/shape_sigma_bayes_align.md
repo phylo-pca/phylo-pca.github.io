@@ -9,7 +9,7 @@ rather than neighbour-joining; the `"proc"` rows are shared with
 ## Usage
 
 ``` r
-data(shape_sigma_bayes_align)
+shape_sigma_bayes_align
 ```
 
 ## Format

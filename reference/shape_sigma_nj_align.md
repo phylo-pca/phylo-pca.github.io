@@ -12,7 +12,7 @@ neighbour- joining half of the alignment-comparison Figure
 ## Usage
 
 ``` r
-data(shape_sigma_nj_align)
+shape_sigma_nj_align
 ```
 
 ## Format

@@ -8,7 +8,7 @@ both continuous and discrete data, several replicate simulations per
 ## Usage
 
 ``` r
-data(scale_njdense)
+scale_njdense
 ```
 
 ## Format

@@ -8,7 +8,7 @@ the same trees (`unique(shape_both_bayes$t)`).
 ## Usage
 
 ``` r
-data(shape_both_bayes)
+shape_both_bayes
 ```
 
 ## Format

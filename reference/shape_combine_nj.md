@@ -11,7 +11,7 @@ fuse).
 ## Usage
 
 ``` r
-data(shape_combine_nj)
+shape_combine_nj
 ```
 
 ## Format

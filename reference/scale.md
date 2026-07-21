@@ -16,7 +16,7 @@ here are the final, 2-chain, converged values.
 ## Usage
 
 ``` r
-data(scale)
+scale
 ```
 
 ## Format

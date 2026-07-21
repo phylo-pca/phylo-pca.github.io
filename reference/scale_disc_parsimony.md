@@ -11,7 +11,7 @@ rather than a strict consensus.
 ## Usage
 
 ``` r
-data(scale_disc_parsimony)
+scale_disc_parsimony
 ```
 
 ## Format

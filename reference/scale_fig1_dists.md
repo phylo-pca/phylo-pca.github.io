@@ -11,7 +11,7 @@ Robinson-Foulds distance and (where both trees are binary) SPR distance.
 ## Usage
 
 ``` r
-data(scale_fig1_dists)
+scale_fig1_dists
 ```
 
 ## Format

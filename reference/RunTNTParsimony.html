@@ -79,7 +79,9 @@ Palci &amp; Lee 2019) data, and returns every most-parsimonious tree found.</p>
 matrix. For <code>type = "discrete"</code>: a taxa x characters matrix of
 single-character state labels. For <code>type = "landmark"</code>: a named list of
 taxa's landmarks x <code>dim</code> numeric matrices (e.g. from <code><a href="ProcrustesAlign.html">ProcrustesAlign()</a></code>
-or <code><a href="RftraAlign.html">RftraAlign()</a></code>).</p></dd>
+or <code><a href="RftraAlign.html">RftraAlign()</a></code>) – or, to search two or more shape characters
+<em>jointly</em> (e.g. a combined 2D+3D analysis), a list of such lists, one
+per character, with <code>dim</code> given as a matching vector.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
@@ -88,7 +90,7 @@ or <code><a href="RftraAlign.html">RftraAlign()</a></code>).</p></dd>
 
 <dt id="arg-dim">dim<a class="anchor" aria-label="anchor" href="#arg-dim"></a></dt>
 <dd><p>Number of spatial dimensions (required, and only used, when
-<code>type = "landmark"</code>).</p></dd>
+<code>type = "landmark"</code>); a vector when <code>data</code> holds multiple characters.</p></dd>
 
 
 <dt id="arg-tntpath">tntPath<a class="anchor" aria-label="anchor" href="#arg-tntpath"></a></dt>

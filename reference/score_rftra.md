@@ -7,7 +7,7 @@ rather than native or Procrustes alignment.
 ## Usage
 
 ``` r
-data(score_rftra)
+score_rftra
 ```
 
 ## Format

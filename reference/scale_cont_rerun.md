@@ -8,7 +8,7 @@ Figures 1 and 2 actually read the Bayesian numbers from.
 ## Usage
 
 ``` r
-data(scale_cont_rerun)
+scale_cont_rerun
 ```
 
 ## Format
