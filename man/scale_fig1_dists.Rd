@@ -28,4 +28,14 @@ neighbour-joining, maximum parsimony (TNT, continuous Wagner; see
 information distance, Robinson-Foulds distance and (where both trees are
 binary) SPR distance.
 }
+\note{
+The \code{"mp"} arm's \code{SPR} was recomputed on Hamilton via
+\code{TBRDist::USPRDist()} under a per-cell subprocess timeout (999/1000
+cells; \code{SPR_exact = TRUE}). The one cell that did not resolve within a
+6-hour budget (a genuinely hard NP-hard instance, not a bug: two
+markedly dissimilar 21-tip trees, RF = 20) is filled from
+\code{TreeDist::SPRDist()}'s polynomial-time approximation instead
+(\code{SPR_exact = FALSE}), matching the convention already used for the
+other arms' occasional approximate fallbacks.
+}
 \keyword{datasets}

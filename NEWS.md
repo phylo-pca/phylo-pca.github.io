@@ -1,5 +1,13 @@
 # PhyloPCA 0.0.0.9000
 
+- `scale_fig1_dists`'s `mp`-arm `SPR` is now fully populated (1000/1000):
+  the one cell that did not resolve within a 6-hour Hamilton budget under
+  `TBRDist::USPRDist()` (tree 176, nC 25 -- a genuine NP-hard-worst-case
+  instance, not a bug: RF = 20 between two markedly dissimilar 21-tip
+  trees) is filled from `TreeDist::SPRDist()`'s polynomial-time
+  approximation instead, flagged `SPR_exact = FALSE` (matching the
+  convention already used for the other arms' occasional approximate
+  fallbacks).
 - `RunTNTParsimony(type = "landmark")` now accepts a list of landmark
   characters (with a matching `dim` vector) to search two or more shape
   characters jointly, e.g. a combined 2D+3D analysis -- TNT's own xread
