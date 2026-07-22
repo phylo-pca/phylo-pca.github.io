@@ -82,6 +82,17 @@ additive/bayes arms), <code>R/34_par_hamilton_gen.R</code> + <code>R/35_par_hami
 (the <code>"mp"</code> arm, run on Hamilton under the unified TNT search protocol;
 see <code><a href="RunTNTParsimony.html">RunTNTParsimony()</a></code>).</p>
     </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>The <code>"mp"</code> arm's <code>SPR</code> was recomputed on Hamilton via
+<code><a href="https://ms609.github.io/TBRDist/reference/TreeRearrangementDistances.html" class="external-link">TBRDist::USPRDist()</a></code> under a per-cell subprocess timeout (999/1000
+cells; <code>SPR_exact = TRUE</code>). The one cell that did not resolve within a
+6-hour budget (a genuinely hard NP-hard instance, not a bug: two
+markedly dissimilar 21-tip trees, RF = 20) is filled from
+<code><a href="https://ms609.github.io/TreeDist/reference/SPRDist.html" class="external-link">TreeDist::SPRDist()</a></code>'s polynomial-time approximation instead
+(<code>SPR_exact = FALSE</code>), matching the convention already used for the
+other arms' occasional approximate fallbacks.</p>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
